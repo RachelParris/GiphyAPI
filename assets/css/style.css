@@ -41,8 +41,13 @@ button {
 }
 
 section {
-	max-width: 700px;
+	border: 1px solid orange;
+	display: flex;
+	justify-content: center;
+	flex-flow: row wrap;
+	max-width: 100%;
 }
+
 
 footer {
 	position: fixed;
