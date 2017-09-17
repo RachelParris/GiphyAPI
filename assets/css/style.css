@@ -1,0 +1,48 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+#search-bar, section, footer {
+	display: flex;
+	justify-content: center;
+}
+
+header {
+	background: blue;
+	color: #FFF;
+	border: 1px solid yellow;
+	text-align: center;
+}
+
+#search-bar {
+	border: 1px solid red;
+}
+
+form {
+	margin: 10px;
+	border: 1px solid green;
+	width: 50%;
+	text-align: center;
+}
+
+input {
+	margin-bottom: 12px;
+}
+
+button {
+	background: red;
+	color: #FFF;
+	margin: 0 7px;
+	padding: 15px 20px;
+	border: none;
+	border-radius: 17px;
+}
+
+section {}
+
+footer {
+	position: fixed;
+	bottom: 0px;
+}
