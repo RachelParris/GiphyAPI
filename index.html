@@ -2,27 +2,29 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Giphy API</title><!-- 
-	<link rel="stylesheet" type="text/css" href="assets/css/normalize.css"> -->
+	<title>Giphy API</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-	<header>
-		<h1>Giphy API</h1>
-	</header>
-	<div id="search-bar">
-		<form>
-			<input type="text" id="search-field" size="60" placeholder="Enter a search term"></br>
-			<button class="search-btn" type="submit" value="#">Feeling Lucky?</button>
-			<button class="search-btn" type="submit" value="Submit">Submit</button>
-		</form>
+	<div class="contatiner">
+		<header>
+			<h1>Giphy API</h1>
+		</header>
+		<div id="search-bar">
+			<form>
+				<input type="text" id="search-field" size="60" placeholder="Enter a search term"></br>
+	<!-- 			<button id="trending-btn" type="submit" value="Submit">Trending</button> -->
+				<button id="search-btn" type="submit" value="Submit">Submit</button>
+			</form>
+		</div>
+		<section id="search-terms">
+			<button class="btn" data-input="beyonce">Beyonce</button>
+			<button class="btn" data-input="kitten">Meow</button>
+		</section>
+		<section id="gifs"></section>
 	</div>
-	<section id="search-terms">
-		<button class="btn" data-input="meow">Cat</button>
-		<button class="btn" data-input="woof">Dog</button>
-	</section>
-	<section id="gifs"></section>
 	<footer>
 		<p>Created by Rachel Parris 2017</p>
 	</footer>

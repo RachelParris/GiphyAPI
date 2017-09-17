@@ -12,17 +12,13 @@
 header {
 	background: blue;
 	color: #FFF;
-	border: 1px solid yellow;
 	text-align: center;
 }
 
-#search-bar {
-	border: 1px solid red;
-}
+#search-bar {}
 
 form {
 	margin: 10px;
-	border: 1px solid green;
 	width: 50%;
 	text-align: center;
 }
@@ -41,15 +37,33 @@ button {
 }
 
 section {
-	border: 1px solid orange;
 	display: flex;
-	justify-content: center;
 	flex-flow: row wrap;
+	justify-content: center;
 	max-width: 100%;
 }
 
 
+.item {
+	background: #E1CCD5;
+	color: #989898;
+	border: 1px solid #CBB0C8;
+	border-radius: 5px;
+	margin: 12px;
+}
+
+.item p {
+	padding: 5px;
+}
+
+img {
+	border-radius: 5px;
+	margin: 7px;
+}
+
 footer {
+	background: #CCC;
+	width: 100%;
 	position: fixed;
 	bottom: 0px;
 }
