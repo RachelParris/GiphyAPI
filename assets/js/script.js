@@ -55,7 +55,7 @@ function postGifs(response) {
 		var imgStill = result[i].images.fixed_height_still.url,
 			imgAnimated = result[i].images.fixed_height.url;
 			link = result[i].url,
-			rating = 'Rated: ' + result[i].rating.toUpperCase(),
+			rating = 'Rated: ' + result[i].rating.toUpperCase();
 
 		var gifDiv = $('<div class="item">'),
 			par = $('<p>').text(rating),
