@@ -1,28 +1,39 @@
+var topics = ['Beyonce', 'Rihanna', 'Adele', 'Katy Perry'];
+
+// Creates inital search buttons.
+topics.forEach(function(item) {
+	var createdBtn = $('<button>').attr({'class': 'btn', 'data-input': item}).html(item);
+	createdBtn.appendTo('#search-terms');
+	});
+
 $('#search-btn').click(function(event) {
 	event.preventDefault();
 
 	// Stores the user's input.
-	userInput = $('#search-field').val();
-	console.log(userInput);
+	var userInput = $('#search-field').val(),
+			addTopics = topics.push(userInput);
+	console.log(topics);
 
-	// Creates a dynamic button in the search-term div.
-	var createdBtn = $('<button>').attr({'class': 'btn', 'data-input': userInput}).html(userInput);
+	$(topics).empty();
+
+	var createdBtn = $('<button>').attr({'class': 'btn', 'data-input': userInput}).append(userInput);
 	createdBtn.appendTo('#search-terms');
 });
 
 
-$('.btn').click(function() {
+$(document.body).on("click", ".btn", function() {
 	var trigger = $(this).attr('data-input');
 	callSearch(trigger);
 });
 
 //Executes the API call.
 function callSearch(apiRequest) {
-	var randomNum = Math.floor(Math.random() * 1000);
+	// Random number generator from 0-1000.
+	var randomNum = Math.floor(Math.random() * 1001);
 
 		// Setting up API call.
 	var queryURL = 'http://api.giphy.com/v1/gifs/search?limit=10&offset=' + randomNum + '&q=' + apiRequest,
-			apiKey = '&api_key=22e070ef831b40b492b87d3a49438799';
+			apiKey = '&api_key=LvdlbUxQi7tdpWDVBVbRROSDOxfVuSMb';
 
 	$.ajax({
 		url: queryURL + apiKey,
@@ -44,38 +55,29 @@ function postGifs(response) {
 		var imgStill = result[i].images.fixed_height_still.url,
 			imgAnimated = result[i].images.fixed_height.url;
 			link = result[i].url,
-			rating = 'Rated: ' + result[i].rating.toUpperCase();
+			rating = 'Rated: ' + result[i].rating.toUpperCase(),
 
 		var gifDiv = $('<div class="item">'),
 			par = $('<p>').text(rating),
-			img = $('<img>').attr({'src': imgStill, 'data-state': 'still'});
-
-		// var hyperlink = '<a href=' + link + ' targert="_blank">' + link + '</a>';
+			giphyLink = $('<p>').html('<a href=' + link + ' target="_blank">Link</a>'),
+			img = $('<img>').attr({'src': imgStill, 'class' : 'test',  'data-state': 'still', 'data-animate': imgAnimated, 'data-still': imgStill});
 
 		gifDiv.prepend(par);
+		gifDiv.prepend(giphyLink)
 		gifDiv.prepend(img);
 
 		$('#gifs').prepend(gifDiv);
 	}
+}
 
 // Toggle between still and animated states of image.
-$('img').click(function() {
+$(document).on("click", 'img', function() {
 	var state = $(this).attr("data-state");
-
 	if ( state === "still") {
 		$(this).attr({'data-state': 'animate'});
-		$(this).attr("src", imgAnimated);
+		$(this).attr("src", $(this).attr("data-animate"));
 	} else {
 		$(this).attr({'data-state': 'still'});
-		$(this).attr("src", imgStill);
+		$(this).attr("src", $(this).attr("data-still"));
 	}
 });
-	
-}
-
-
-
-function toggleGifs() {
-
-}
-
