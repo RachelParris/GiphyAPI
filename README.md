@@ -1,6 +1,6 @@
 # GiphyAPI
 
-![Screenshot](giphy-image.jpg)
+![Screenshot](screeenshot.jpg)
 
 [Demo](https://rachelparris.github.io/GiphyAPI/)
 
