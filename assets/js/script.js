@@ -32,7 +32,7 @@ function callSearch(apiRequest) {
 	var randomNum = Math.floor(Math.random() * 1001);
 
 		// Setting up API call.
-	var queryURL = 'http://api.giphy.com/v1/gifs/search?limit=10&offset=' + randomNum + '&q=' + apiRequest,
+	var queryURL = 'https://api.giphy.com/v1/gifs/search?limit=10&offset=' + randomNum + '&q=' + apiRequest,
 			apiKey = '&api_key=LvdlbUxQi7tdpWDVBVbRROSDOxfVuSMb';
 
 	$.ajax({
