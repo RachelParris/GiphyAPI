@@ -1,69 +1,64 @@
-var topics = ['Beyonce', 'Rihanna', 'Adele', 'Katy Perry'];
+const topics = ['Beyonce', 'Rihanna', 'Adele', 'Katy Perry'];
 
 // Creates inital search buttons.
-topics.forEach(function(item) {
-	var createdBtn = $('<button>').attr({'class': 'btn', 'data-input': item}).html(item);
+topics.forEach(item => {
+	const createdBtn = $('<button>').attr({'class': 'btn', 'data-input': item}).html(item);
 	createdBtn.appendTo('#search-terms');
-	});
+});
 
-$('#search-btn').click(function(event) {
+$('#search-btn').click(event => {
 	event.preventDefault();
 
 	// Stores the user's input.
-	var userInput = $('#search-field').val(),
-			addTopics = topics.push(userInput);
+	const userInput = $('#search-field').val();
+	const addTopics = topics.push(userInput);
 	console.log(topics);
 
 	$(topics).empty();
 
-	var createdBtn = $('<button>').attr({'class': 'btn', 'data-input': userInput}).append(userInput);
+	const createdBtn = $('<button>').attr({'class': 'btn', 'data-input': userInput}).append(userInput);
 	createdBtn.appendTo('#search-terms');
 });
 
 
-$(document.body).on("click", ".btn", function() {
-	var trigger = $(this).attr('data-input');
+$(document.body).on("click", ".btn", () => {
+	const trigger = $(this).attr('data-input');
 	callSearch(trigger);
 });
 
 //Executes the API call.
-function callSearch(apiRequest) {
+const callSearch = apiRequest => {
 	// Random number generator from 0-1000.
-	var randomNum = Math.floor(Math.random() * 1001);
+	const randomNum = Math.floor(Math.random() * 1001);
 
 		// Setting up API call.
-	var queryURL = 'https://api.giphy.com/v1/gifs/search?limit=10&offset=' + randomNum + '&q=' + apiRequest,
-			apiKey = '&api_key=LvdlbUxQi7tdpWDVBVbRROSDOxfVuSMb';
+	const queryURL = 'https://api.giphy.com/v1/gifs/search?limit=10&offset=' + randomNum + '&q=' + apiRequest;
+	const apiKey = '&api_key=LvdlbUxQi7tdpWDVBVbRROSDOxfVuSMb';
 
 	$.ajax({
 		url: queryURL + apiKey,
 		method: 'GET'
-	}).done(function(response) {
-		console.log('Success!');
-		postGifs(response);
-
-	}).fail(function(err) {
-		console.log('API call failed.');
 	})
+	.done(response => postGifs(response))
+	.fail(err => console.log('API call failed.'))
 }
 
+const postGifs = response => {
+	const result = response.data;
 
-function postGifs(response) {
-	var result = response.data;
+	for (let i = 0; i < result.length; i++) {
+		let imgStill = result[i].images.fixed_height_still.url;
+		let imgAnimated = result[i].images.fixed_height.url;
+		let link = result[i].url;
+		let rating = 'Rated: ' + result[i].rating.toUpperCase();
 
-	for (var i = 0; i < result.length; i++) {
-		var imgStill = result[i].images.fixed_height_still.url,
-			imgAnimated = result[i].images.fixed_height.url;
-			link = result[i].url,
-			rating = 'Rated: ' + result[i].rating.toUpperCase();
-
-		var gifDiv = $('<div class="item">'),
-			par = $('<p>').text(rating),
-			giphyLink = $('<p>').html('<a href=' + link + ' target="_blank">Link</a>'),
-			img = $('<img>').attr({'src': imgStill, 'class' : 'test',  'data-state': 'still', 'data-animate': imgAnimated, 'data-still': imgStill});
+		let gifDiv = $('<div class="item">');
+		let par = $('<p>').text(rating);
+		let giphyLink = $('<p>').html('<a href=' + link + ' target="_blank">Link</a>');
+		let img = $('<img>').attr({'src': imgStill, 'class' : 'test',  'data-state': 'still', 'data-animate': imgAnimated, 'data-still': imgStill});
 
 		gifDiv.prepend(par);
-		gifDiv.prepend(giphyLink)
+		gifDiv.prepend(giphyLink);
 		gifDiv.prepend(img);
 
 		$('#gifs').prepend(gifDiv);
@@ -71,8 +66,8 @@ function postGifs(response) {
 }
 
 // Toggle between still and animated states of image.
-$(document).on("click", 'img', function() {
-	var state = $(this).attr("data-state");
+$(document).on("click", 'img', () => {
+	const state = $(this).attr("data-state");
 	if ( state === "still") {
 		$(this).attr({'data-state': 'animate'});
 		$(this).attr("src", $(this).attr("data-animate"));
