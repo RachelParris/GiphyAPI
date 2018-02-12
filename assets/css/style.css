@@ -17,7 +17,7 @@ a {
 	text-decoration-line: none;
 }
 
-#search-bar, section, footer {
+#search-form, section, footer {
 	display: flex;
 	justify-content: center;
 }
@@ -25,11 +25,12 @@ a {
 header {
 	color: #FFF;
 	text-align: center;
-	font-size: 32px;
+	font-family: 'Oleo Script', cursive;
+	font-size: 48px;
 	margin: 5px;
 }
 
-#search-bar {
+#search-form {
 	background: linear-gradient(to bottom left, #9d33f6, #c733a2);
 	margin: 10px 0;
 }
@@ -45,14 +46,14 @@ input {
 	line-height: 20px;
 }
 
-.btn, #search-btn {
+.btn, #create-topic {
 	padding: 15px 20px;
 	border: none;
 	font-weight: 700;
 	font-style: oblique;
 }
 
-#search-btn {
+#create-topic {
 	background-color: #3894FC;
 	color: #FEFEFE;
 	border-radius: 0 10px 10px 0;
@@ -75,14 +76,14 @@ section {
 }
 
 
-.item {
+.card {
 	border: 2px solid #212121;
 	color: #989898;
 	border-radius: 5px;
 	margin: 12px;
 }
 
-.item p {
+.card p {
 	padding: 5px;
 }
 
@@ -106,7 +107,7 @@ footer {
 		font-size: 20px;
 	}
 
-#search-bar {
+#search-form {
 	background: linear-gradient(to bottom left, #9d33f6, #c733a2);
 	margin: 7px 0;
 }

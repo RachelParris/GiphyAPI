@@ -1,78 +1,80 @@
-const topics = ['Beyonce', 'Rihanna', 'Adele', 'Katy Perry'];
+const topics = ["Beyonce", "Japan", "Kittens", "Cupcakes"];
 
-// Creates inital search buttons.
-topics.forEach(item => {
-	const createdBtn = $('<button>').attr({'class': 'btn', 'data-input': item}).html(item);
-	createdBtn.appendTo('#search-terms');
+// Makes a button for each topic in the array
+topics.forEach(topic => {
+	let topicBtn = $("<button>")
+		.attr({
+			"class": "btn",
+			"value": topic
+		})
+		.html(topic);
+
+		$("#topic-btn").append(topicBtn);
 });
 
-$('#search-btn').click(event => {
+// Capture user input
+$("#create-topic").click(event => {
 	event.preventDefault();
 
-	// Stores the user's input.
-	const userInput = $('#search-field').val();
-	const addTopics = topics.push(userInput);
-	console.log(topics);
+	const userInput = $("#search-field").val();
+	topics.push(userInput);
 
-	$(topics).empty();
+	// TODO Clear search field after form submit
 
-	const createdBtn = $('<button>').attr({'class': 'btn', 'data-input': userInput}).append(userInput);
-	createdBtn.appendTo('#search-terms');
+	// Add new topic buttons
+	const newTopicBtn = $("<button>")
+		.attr({
+			"class": "btn",
+			"value": userInput
+		})
+		.append(userInput);
+
+	$("#topic-btn").append(newTopicBtn);
 });
 
+$(document.body).on("click", ".btn", (event) => {
 
-$(document.body).on("click", ".btn", () => {
-	const trigger = $(this).attr('data-input');
-	callSearch(trigger);
-});
+	// this not working properly... use event instead
+	const makeRequest = $(event.currentTarget).attr("value");
+	searchForGifs(makeRequest);
+})
 
-//Executes the API call.
-const callSearch = apiRequest => {
-	// Random number generator from 0-1000.
-	const randomNum = Math.floor(Math.random() * 1001);
 
-		// Setting up API call.
-	const queryURL = 'https://api.giphy.com/v1/gifs/search?limit=10&offset=' + randomNum + '&q=' + apiRequest;
+//Execute API call
+const searchForGifs = request => {
+	// Setting up API call.
+	const queryURL = 'https://api.giphy.com/v1/gifs/search?limit=10&q=' + request;
 	const apiKey = '&api_key=LvdlbUxQi7tdpWDVBVbRROSDOxfVuSMb';
 
 	$.ajax({
 		url: queryURL + apiKey,
 		method: 'GET'
 	})
-	.done(response => postGifs(response))
-	.fail(err => console.log('API call failed.'))
+	.done(res => {
+
+		res.data.map(gif => {
+
+			let imgTitle = gif.title.toUpperCase();
+			let previewImg = gif.images.fixed_height_still.url;
+			let animatedImg = gif.images.fixed_height.url;
+			let imgURL = gif.bitly_gif_url;
+			let rating = gif.rating.toUpperCase();
+
+			let card = $(
+				`<div class="card">
+					<div>
+						<img src="${animatedImg}" alt="${imgTitle}">
+					</div>
+					<p>
+						<a href="${imgURL}" target="_blank">${imgTitle}</a>
+						<br>
+						Rating: ${rating}
+					</p>
+				</div>`
+			);
+
+			$("#cards").prepend(card);
+		})
+	})
+	.fail(err => console.log('API call failed. ', err))
 }
-
-const postGifs = response => {
-	const result = response.data;
-
-	for (let i = 0; i < result.length; i++) {
-		let imgStill = result[i].images.fixed_height_still.url;
-		let imgAnimated = result[i].images.fixed_height.url;
-		let link = result[i].url;
-		let rating = 'Rated: ' + result[i].rating.toUpperCase();
-
-		let gifDiv = $('<div class="item">');
-		let par = $('<p>').text(rating);
-		let giphyLink = $('<p>').html('<a href=' + link + ' target="_blank">Link</a>');
-		let img = $('<img>').attr({'src': imgStill, 'class' : 'test',  'data-state': 'still', 'data-animate': imgAnimated, 'data-still': imgStill});
-
-		gifDiv.prepend(par);
-		gifDiv.prepend(giphyLink);
-		gifDiv.prepend(img);
-
-		$('#gifs').prepend(gifDiv);
-	}
-}
-
-// Toggle between still and animated states of image.
-$(document).on("click", 'img', () => {
-	const state = $(this).attr("data-state");
-	if ( state === "still") {
-		$(this).attr({'data-state': 'animate'});
-		$(this).attr("src", $(this).attr("data-animate"));
-	} else {
-		$(this).attr({'data-state': 'still'});
-		$(this).attr("src", $(this).attr("data-still"));
-	}
-});
