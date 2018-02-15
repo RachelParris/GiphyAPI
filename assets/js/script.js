@@ -51,7 +51,7 @@ const searchForGifs = request => {
 		method: 'GET'
 	})
 	.done(res => {
-
+		
 		res.data.map(gif => {
 
 			let imgTitle = gif.title.toUpperCase();
@@ -63,7 +63,12 @@ const searchForGifs = request => {
 			let card = $(
 				`<div class="card">
 					<div>
-						<img src="${animatedImg}" alt="${imgTitle}">
+						<img 
+							src="${previewImg}" 
+							alt="${imgTitle}"
+							data-state="preview"
+							data-preview=${previewImg}
+							data-animate=${animatedImg}>
 					</div>
 					<p>
 						<a href="${imgURL}" target="_blank">${imgTitle}</a>
@@ -75,6 +80,19 @@ const searchForGifs = request => {
 
 			$("#cards").prepend(card);
 		})
+
+		$(document).on("click", "img", function () {
+			const state = $(this).attr("data-state");
+
+			if (state === "preview") {
+				$(this).attr({"data-state": "animate"});
+				$(this).attr("src", $(this).attr("data-animate"));
+			} else {
+				$(this).attr({"data-state": "preview"});
+				$(this).attr("src", $(this).attr("data-preview"));
+			}
+		});
+		
 	})
 	.fail(err => console.log('API call failed. ', err))
 }
