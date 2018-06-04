@@ -32,10 +32,9 @@ $("#create-topic").click(event => {
 	$("#topic-btn").append(newTopicBtn);
 });
 
-$(document.body).on("click", ".btn", (event) => {
-
-	// this not working properly... use event instead
-	const makeRequest = $(event.currentTarget).attr("value");
+$(document.body).on("click", ".btn", function() {
+	$("#cards").empty();
+	const makeRequest = $(this).attr("value");
 	searchForGifs(makeRequest);
 })
 
@@ -43,7 +42,8 @@ $(document.body).on("click", ".btn", (event) => {
 //Execute API call
 const searchForGifs = request => {
 	// Setting up API call.
-	const queryURL = 'https://api.giphy.com/v1/gifs/search?limit=10&q=' + request;
+	const offset = "&offset=" + Math.floor(Math.random() * 100);
+	const queryURL = 'https://api.giphy.com/v1/gifs/search?limit=10&q=' + request + offset;
 	const apiKey = '&api_key=LvdlbUxQi7tdpWDVBVbRROSDOxfVuSMb';
 
 	$.ajax({
@@ -81,7 +81,8 @@ const searchForGifs = request => {
 			$("#cards").prepend(card);
 		})
 
-		$(document).on("click", "img", function () {
+		$("img").click(function () {
+			console.log("trigger")
 			const state = $(this).attr("data-state");
 
 			if (state === "preview") {
